@@ -16,6 +16,8 @@ class ScreenshotApp:
 
         self.screenshots = []
 
+        self.root.protocol("WM_DELETE_WINDOW", self.on_close)
+
         # Status label
         self.status_label = tk.Label(root, text="Status: Ready.")
         self.status_label.grid(row=0, column=0, columnspan=4, pady=5)
@@ -147,8 +149,19 @@ class ScreenshotApp:
             messagebox.showerror("Error", "The Word file is open. Please close it and try again.")
 
     def reset_screenshots(self):
+        if self.screenshots:
+            confirm = messagebox.askyesno("Confirm Reset", "Are you sure you want to reset all screenshots?")
+            if not confirm:
+                return
         self.screenshots = []  # Clear all stored screenshots
         self.status_label.config(text="Status: Screenshots reset.")
+
+    def on_close(self):
+        if self.screenshots:
+            confirm = messagebox.askyesno("Confirm Exit", "Screenshots exist. Are you sure you want to exit?")
+            if not confirm:
+                return
+        self.root.destroy()
 
 
 if __name__ == "__main__":
