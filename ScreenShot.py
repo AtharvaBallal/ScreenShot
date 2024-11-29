@@ -14,6 +14,11 @@ class ScreenshotApp:
         self.root.title("SnapIt")
         self.root.attributes('-topmost', True)  # Make the window stay on top
 
+        try:
+            self.root.iconbitmap("Icon/SnapIt.ico")
+        except Exception as e:
+            print(f"Error loading icon: {e}")
+
         self.screenshots = []
 
         self.root.protocol("WM_DELETE_WINDOW", self.on_close)
