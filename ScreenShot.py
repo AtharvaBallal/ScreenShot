@@ -3,6 +3,8 @@ from tkinter import filedialog, messagebox
 import openpyxl
 import pyautogui
 import io
+
+from docx.shared import Inches
 from openpyxl.drawing.image import Image as ExcelImage
 from docx import Document
 
@@ -145,7 +147,8 @@ class ScreenshotApp:
                 img_io = io.BytesIO()
                 screenshot.save(img_io, format="PNG")
                 img_io.seek(0)
-                doc.add_picture(img_io)
+                doc.add_picture(img_io, width=Inches(6))
+                img_io.seek(0)  # Reset the IO stream for Word
                 doc.add_paragraph()  # Add space between screenshots
 
             doc.save(file_path)
